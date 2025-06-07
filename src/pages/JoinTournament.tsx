@@ -4,11 +4,27 @@ import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+interface FormData {
+  username: string;
+  email: string;
+  gameId: string;
+  teamName: string;
+  phone: string;
+}
+
+interface FormErrors {
+  username?: string;
+  email?: string;
+  gameId?: string;
+  teamName?: string;
+  phone?: string;
+}
+
 const JoinTournament = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     username: "",
     email: "",
     gameId: "",
@@ -16,7 +32,7 @@ const JoinTournament = () => {
     phone: ""
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Mock tournament data - in real app would fetch from API
@@ -33,14 +49,14 @@ const JoinTournament = () => {
     status: "upcoming"
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
     // Clear error when user starts typing
-    if (errors[name]) {
+    if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({
         ...prev,
         [name]: ""
@@ -49,7 +65,7 @@ const JoinTournament = () => {
   };
 
   const validateForm = () => {
-    const newErrors = {};
+    const newErrors: FormErrors = {};
 
     if (!formData.username.trim()) newErrors.username = "Username is required";
     if (!formData.email.trim()) newErrors.email = "Email is required";
@@ -61,7 +77,7 @@ const JoinTournament = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) return;

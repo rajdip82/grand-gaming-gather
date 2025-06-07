@@ -4,9 +4,30 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+interface FormData {
+  name: string;
+  game: string;
+  date: string;
+  time: string;
+  entryFee: string;
+  prizePool: string;
+  maxParticipants: string;
+  description: string;
+}
+
+interface FormErrors {
+  name?: string;
+  game?: string;
+  date?: string;
+  time?: string;
+  entryFee?: string;
+  prizePool?: string;
+  maxParticipants?: string;
+}
+
 const CreateTournament = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     game: "",
     date: "",
@@ -17,18 +38,18 @@ const CreateTournament = () => {
     description: ""
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<FormErrors>({});
 
   const games = ["PUBG Mobile", "Free Fire", "Clash of Clans", "Ludo King", "Call of Duty", "Among Us"];
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
     // Clear error when user starts typing
-    if (errors[name]) {
+    if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({
         ...prev,
         [name]: ""
@@ -37,15 +58,15 @@ const CreateTournament = () => {
   };
 
   const validateForm = () => {
-    const newErrors = {};
+    const newErrors: FormErrors = {};
 
     if (!formData.name.trim()) newErrors.name = "Tournament name is required";
     if (!formData.game) newErrors.game = "Please select a game";
     if (!formData.date) newErrors.date = "Date is required";
     if (!formData.time) newErrors.time = "Time is required";
-    if (!formData.entryFee || formData.entryFee < 0) newErrors.entryFee = "Valid entry fee is required";
-    if (!formData.prizePool || formData.prizePool < 0) newErrors.prizePool = "Valid prize pool is required";
-    if (!formData.maxParticipants || formData.maxParticipants < 2) newErrors.maxParticipants = "Minimum 2 participants required";
+    if (!formData.entryFee || Number(formData.entryFee) < 0) newErrors.entryFee = "Valid entry fee is required";
+    if (!formData.prizePool || Number(formData.prizePool) < 0) newErrors.prizePool = "Valid prize pool is required";
+    if (!formData.maxParticipants || Number(formData.maxParticipants) < 2) newErrors.maxParticipants = "Minimum 2 participants required";
 
     // Check if date is in the future
     const selectedDate = new Date(`${formData.date}T${formData.time}`);
@@ -58,7 +79,7 @@ const CreateTournament = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (validateForm()) {
@@ -208,7 +229,7 @@ const CreateTournament = () => {
                 name="description"
                 value={formData.description}
                 onChange={handleInputChange}
-                rows="4"
+                rows={4}
                 className="w-full px-4 py-3 bg-slate-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 transition-colors"
                 placeholder="Enter tournament description, rules, or additional information..."
               ></textarea>
