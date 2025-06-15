@@ -24,7 +24,7 @@ const Header = () => {
             <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg flex items-center justify-center">
               <Gamepad className="w-6 h-6 text-white" />
             </div>
-            <span className="text-xl font-bold text-white">Battle Arena</span>
+            <span className="text-xl font-bold text-white">proxycorn</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -82,3 +82,4 @@ const Header = () => {
 };
 
 export default Header;
+

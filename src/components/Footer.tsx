@@ -6,7 +6,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-white">Battle Arena</h3>
+            <h3 className="text-2xl font-bold text-white">proxycorn</h3>
             <p className="text-gray-400">
               The ultimate gaming tournament platform for competitive players worldwide.
             </p>
@@ -38,16 +38,16 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="text-lg font-semibold text-white">Contact</h4>
             <ul className="space-y-2">
-              <li><span className="text-gray-400">support@battlearena.com</span></li>
+              <li><span className="text-gray-400">support@proxycorn.com</span></li>
               <li><span className="text-gray-400">+1 (555) 123-4567</span></li>
-              <li><span className="text-gray-400">Follow @BattleArena</span></li>
+              <li><span className="text-gray-400">Follow @proxycorn</span></li>
             </ul>
           </div>
         </div>
 
         <div className="mt-8 pt-8 border-t border-purple-500/20 text-center">
           <p className="text-gray-400">
-            © 2025 Battle Arena. All rights reserved. Built for gamers, by gamers.
+            © 2025 proxycorn. All rights reserved. Built for gamers, by gamers.
           </p>
         </div>
       </div>
@@ -56,3 +56,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
