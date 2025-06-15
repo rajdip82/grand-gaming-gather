@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Trophy, Zap, Plus, Target, Users, Gamepad, Calendar } from "lucide-react";
@@ -10,6 +9,7 @@ import AnimatedCounter from "../components/AnimatedCounter";
 
 const Index = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isTitleAnimated, setIsTitleAnimated] = useState(false);
 
   const supportedGames = [
     { name: "PUBG Mobile", icon: "🎯", players: "1.2M+" },
@@ -22,6 +22,9 @@ const Index = () => {
 
   useEffect(() => {
     setIsLoaded(true);
+    // Slight delay for more visible animation effect
+    const timeout = setTimeout(() => setIsTitleAnimated(true), 200);
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
@@ -39,15 +42,37 @@ const Index = () => {
         
         <div className="relative max-w-7xl mx-auto text-center">
           <div className="mb-6 space-y-4">
+
             <div className={`transform transition-all duration-1000 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
               <span className="inline-block px-6 py-2 bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-full text-purple-300 text-sm font-medium backdrop-blur-sm">
                 🏆 Welcome to the Ultimate Gaming Arena
               </span>
             </div>
-            
-            <h1 className={`text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 transform transition-all duration-1000 delay-300 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-              <span className="block leading-tight">PROXYCORN</span>
-              <span className="block leading-tight bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent animate-pulse">TOURNAMENTS</span>
+
+            {/* ANIMATED HERO TITLE */}
+            <h1
+              className={`
+                text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400
+                transition-all duration-1000 delay-300
+                ${isTitleAnimated ? "animate-fade-in scale-100 opacity-100" : "scale-90 opacity-0"}
+              `}
+              style={{ transitionProperty: "opacity, transform" }}
+            >
+              <span className="block leading-tight">
+                PROXYCORN
+              </span>
+              <span
+                className={`
+                  block leading-tight
+                  bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent
+                  animate-pulse
+                  transition-all duration-1000
+                  ${isTitleAnimated ? "animate-fade-in scale-100 opacity-100" : "scale-90 opacity-0"}
+                `}
+                style={{ transitionProperty: "opacity, transform" }}
+              >
+                TOURNAMENTS
+              </span>
             </h1>
           </div>
           
@@ -214,4 +239,3 @@ const Index = () => {
 };
 
 export default Index;
-
