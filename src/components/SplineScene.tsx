@@ -7,11 +7,9 @@ interface SplineSceneProps {
   className?: string;
 }
 
-// WARNING: This URL returns 403 (Access Denied) and causes a fatal error in Spline's runtime.
-// Please upload your own Spline scene and paste a working public .splinecode URL here.
-const DEFAULT_SCENE = "";
+// Your Spline scene URL
+const DEFAULT_SCENE = "https://my.spline.design/worldplanet-TFDO98UA1NOkiYYX8hV6WN9w/";
 
-// This component will render nothing if Spline fails to load.
 const SplineScene = ({ sceneUrl = DEFAULT_SCENE, className = "" }: SplineSceneProps) => {
   const [hasError, setHasError] = useState(false);
 
@@ -31,3 +29,4 @@ const SplineScene = ({ sceneUrl = DEFAULT_SCENE, className = "" }: SplineScenePr
 };
 
 export default SplineScene;
+
