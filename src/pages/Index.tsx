@@ -1,54 +1,15 @@
 
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Gamepad, Users, Calendar, Plus, Trophy, Zap, Target } from "lucide-react";
+import { Trophy, Zap, Plus, Target, Users, Gamepad, Calendar } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import TournamentCard from "../components/TournamentCard";
 import GameCard from "../components/GameCard";
 import ParticleBackground from "../components/ParticleBackground";
 import AnimatedCounter from "../components/AnimatedCounter";
 
 const Index = () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [featuredTournaments, setFeaturedTournaments] = useState([
-    {
-      id: 1,
-      name: "PUBG Mobile Championship",
-      game: "PUBG Mobile",
-      date: "2025-06-15",
-      time: "18:00",
-      entryFee: 50,
-      prizePool: 10000,
-      participants: 45,
-      maxParticipants: 100,
-      status: "upcoming"
-    },
-    {
-      id: 2,
-      name: "Free Fire World Cup",
-      game: "Free Fire",
-      date: "2025-06-20",
-      time: "20:00",
-      entryFee: 30,
-      prizePool: 5000,
-      participants: 78,
-      maxParticipants: 80,
-      status: "filling"
-    },
-    {
-      id: 3,
-      name: "Clash of Clans War League",
-      game: "Clash of Clans",
-      date: "2025-06-18",
-      time: "16:00",
-      entryFee: 25,
-      prizePool: 3000,
-      participants: 32,
-      maxParticipants: 50,
-      status: "upcoming"
-    }
-  ]);
 
   const supportedGames = [
     { name: "PUBG Mobile", icon: "🎯", players: "1.2M+" },
@@ -125,32 +86,53 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Featured Tournaments */}
+      {/* Gaming Details & Esport Community Section */}
       <section className="py-20 px-4 relative">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
-            <div className="inline-block px-4 py-2 bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 rounded-full text-purple-300 text-sm font-medium backdrop-blur-sm mb-6">
-              🔥 Live Competitions
+            <div className="inline-block px-4 py-2 bg-gradient-to-r from-yellow-400/20 to-pink-400/20 border border-yellow-300/30 rounded-full text-yellow-300 text-sm font-medium backdrop-blur-sm mb-6">
+              🌐 Esport Community
             </div>
-            <h2 className="text-5xl font-black text-white mb-6 bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
-              FEATURED TOURNAMENTS
+            <h2 className="text-5xl font-black text-white mb-6 bg-gradient-to-r from-white via-yellow-200 to-white bg-clip-text text-transparent">
+              GAMING DETAILS & COMMUNITY
             </h2>
             <p className="text-gray-400 text-xl max-w-2xl mx-auto">
-              Don't miss these <span className="text-purple-400">epic battles</span> happening right now
+              Join a vibrant <span className="text-yellow-400">esports community</span> – from rookies to pros, share tips, squad up, and celebrate epic wins. Track your journey, connect with fellow players, and grow your legend!
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredTournaments.map((tournament, index) => (
-              <div 
-                key={tournament.id}
-                className={`transform transition-all duration-700 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
-                style={{ transitionDelay: `${index * 200}ms` }}
-              >
-                <TournamentCard tournament={tournament} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/70 p-8 rounded-2xl border border-purple-500/20 shadow-md flex flex-col justify-center mb-10 md:mb-0">
+              <h3 className="text-2xl font-bold text-purple-300 mb-4 flex items-center gap-2">
+                <Users className="w-7 h-7 text-pink-400" />
+                Connected Gamers
+              </h3>
+              <p className="text-gray-300 mb-6">Find friends, chat in real time, and join group tournaments. Our community forums and Discord integration keep players informed, engaged, and hyped for every event!</p>
+              <div className="flex gap-10">
+                <div>
+                  <div className="text-4xl font-black text-pink-400 mb-2"><AnimatedCounter end={56000} suffix="+" /></div>
+                  <div className="text-gray-400 text-sm">Active Members</div>
+                </div>
+                <div>
+                  <div className="text-4xl font-black text-cyan-400 mb-2"><AnimatedCounter end={110} /></div>
+                  <div className="text-gray-400 text-sm">Community Clans</div>
+                </div>
               </div>
-            ))}
+            </div>
+            <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/70 p-8 rounded-2xl border border-purple-500/20 shadow-md flex flex-col justify-center">
+              <h3 className="text-2xl font-bold text-purple-300 mb-4 flex items-center gap-2">
+                <Gamepad className="w-7 h-7 text-blue-400" />
+                Why Join Proxycorn?
+              </h3>
+              <ul className="list-disc ml-6 text-gray-300 space-y-3">
+                <li>Track your win/loss stats and progress in real time.</li>
+                <li>Participate in custom leagues and special esports events.</li>
+                <li>Earn badges, ranks, and exclusive community rewards.</li>
+                <li>24/7 support and guidance from admins & community leaders.</li>
+              </ul>
+            </div>
           </div>
         </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-800/10 via-pink-800/10 to-purple-800/10 pointer-events-none"></div>
       </section>
 
       {/* Supported Games */}
