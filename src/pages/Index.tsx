@@ -6,7 +6,6 @@ import Footer from "../components/Footer";
 import GameCard from "../components/GameCard";
 import ParticleBackground from "../components/ParticleBackground";
 import AnimatedCounter from "../components/AnimatedCounter";
-import SplineScene from "../components/SplineScene";
 
 const Index = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -35,10 +34,10 @@ const Index = () => {
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-4">
-        {/* --- Spline 3D SCENE in hero background --- */}
-        <div className="absolute inset-0 z-0">
+        {/* --- REMOVED Spline 3D SCENE in hero background --- */}
+        {/* <div className="absolute inset-0 z-0">
           <SplineScene />
-        </div>
+        </div> */}
         {/* ... keep existing gradient & shapes ... */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600/30 via-pink-600/20 to-blue-600/30 animate-pulse"></div>
