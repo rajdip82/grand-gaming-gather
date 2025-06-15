@@ -9,7 +9,7 @@ interface SplineSceneProps {
 }
 
 // Your Spline scene URL, example placeholder (MUST be a direct .splinecode link!)
-const DEFAULT_SCENE = ""; // Set your direct .splinecode file link here!
+const DEFAULT_SCENE = "https://prod.spline.design/RUFPaWu7WqZem0H9/scene.splinecode"; // <-- APPLYING YOUR SCENE
 
 const SplineScene = ({ sceneUrl = DEFAULT_SCENE, className = "" }: SplineSceneProps) => {
   const [hasError, setHasError] = useState(false);
@@ -38,4 +38,3 @@ const SplineScene = ({ sceneUrl = DEFAULT_SCENE, className = "" }: SplineScenePr
 };
 
 export default SplineScene;
-
