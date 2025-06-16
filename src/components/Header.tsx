@@ -1,12 +1,16 @@
-
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Gamepad, Users, Calendar, User, List } from "lucide-react";
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/clerk-react";
+import { Gamepad, Users, Calendar, User, List, Settings } from "lucide-react";
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton, useUser } from "@clerk/clerk-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { user } = useUser();
+
+  // Simple admin check - in a real app, you'd check against your database
+  const isAdmin = user?.emailAddresses[0]?.emailAddress?.includes("admin") || 
+                  user?.publicMetadata?.role === "admin";
 
   const navItems = [
     { name: "Home", path: "/", icon: <Gamepad className="w-4 h-4" /> },
@@ -15,6 +19,11 @@ const Header = () => {
     { name: "Leaderboard", path: "/leaderboard", icon: <List className="w-4 h-4" /> },
     { name: "Dashboard", path: "/dashboard", icon: <User className="w-4 h-4" /> },
   ];
+
+  // Add admin link if user is admin
+  if (isAdmin) {
+    navItems.push({ name: "Admin", path: "/admin", icon: <Settings className="w-4 h-4" /> });
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-purple-500/20">
