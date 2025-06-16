@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Gamepad, Users, Calendar, User, List } from "lucide-react";
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/clerk-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,6 +46,31 @@ const Header = () => {
             ))}
           </nav>
 
+          {/* Authentication Section */}
+          <div className="hidden md:flex items-center space-x-4">
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className="text-gray-300 hover:text-white px-4 py-2 rounded-lg transition-colors">
+                  Sign In
+                </button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <button className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-all duration-300">
+                  Sign Up
+                </button>
+              </SignUpButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: "w-10 h-10",
+                  },
+                }}
+              />
+            </SignedIn>
+          </div>
+
           {/* Mobile Menu Button */}
           <button
             className="md:hidden text-white p-2"
@@ -74,6 +100,33 @@ const Header = () => {
                 <span>{item.name}</span>
               </Link>
             ))}
+            
+            {/* Mobile Authentication */}
+            <div className="mt-4 pt-4 border-t border-purple-500/20 space-y-2">
+              <SignedOut>
+                <SignInButton mode="modal">
+                  <button className="w-full text-left text-gray-300 hover:text-white px-4 py-3 rounded-lg transition-colors">
+                    Sign In
+                  </button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <button className="w-full text-left bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-3 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-all duration-300">
+                    Sign Up
+                  </button>
+                </SignUpButton>
+              </SignedOut>
+              <SignedIn>
+                <div className="px-4 py-3">
+                  <UserButton
+                    appearance={{
+                      elements: {
+                        avatarBox: "w-10 h-10",
+                      },
+                    }}
+                  />
+                </div>
+              </SignedIn>
+            </div>
           </div>
         )}
       </div>
@@ -82,4 +135,3 @@ const Header = () => {
 };
 
 export default Header;
-
