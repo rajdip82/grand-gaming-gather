@@ -2,11 +2,12 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import { useUser } from "@clerk/clerk-react";
-import { Users, Calendar, Trophy, Settings, BarChart3, Shield } from "lucide-react";
+import { Users, Calendar, Trophy, Settings, BarChart3, Shield, Wallet } from "lucide-react";
 import AdminTournaments from "../components/admin/AdminTournaments";
 import AdminUsers from "../components/admin/AdminUsers";
 import AdminStats from "../components/admin/AdminStats";
 import AdminSettings from "../components/admin/AdminSettings";
+import AdminWallets from "../components/admin/AdminWallets";
 
 const Admin = () => {
   const { user } = useUser();
@@ -49,6 +50,7 @@ const Admin = () => {
     { id: "dashboard", name: "Dashboard", icon: BarChart3 },
     { id: "tournaments", name: "Tournaments", icon: Trophy },
     { id: "users", name: "Users", icon: Users },
+    { id: "wallets", name: "Wallets", icon: Wallet },
     { id: "settings", name: "Settings", icon: Settings },
   ];
 
@@ -58,6 +60,8 @@ const Admin = () => {
         return <AdminTournaments />;
       case "users":
         return <AdminUsers />;
+      case "wallets":
+        return <AdminWallets />;
       case "settings":
         return <AdminSettings />;
       default:
