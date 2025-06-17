@@ -31,7 +31,7 @@ const AdminWallets = () => {
         .from('withdrawal_requests')
         .select(`
           *,
-          profiles!inner(full_name, email)
+          profiles(full_name, email)
         `)
         .order('requested_at', { ascending: false });
 
@@ -46,7 +46,7 @@ const AdminWallets = () => {
       }
 
       // Transform the data to match our interface
-      const transformedData = data.map(item => ({
+      const transformedData: WithdrawalRequest[] = data?.map(item => ({
         id: item.id,
         amount: item.amount,
         status: item.status,
@@ -55,10 +55,13 @@ const AdminWallets = () => {
         bank_details: item.bank_details,
         admin_notes: item.admin_notes,
         user_id: item.user_id,
-        profiles: Array.isArray(item.profiles) && item.profiles.length > 0 
-          ? item.profiles[0] 
-          : item.profiles
-      }));
+        profiles: item.profiles && typeof item.profiles === 'object' && !Array.isArray(item.profiles)
+          ? {
+              full_name: (item.profiles as any).full_name || 'Unknown User',
+              email: (item.profiles as any).email || 'No email'
+            }
+          : null
+      })) || [];
 
       setWithdrawalRequests(transformedData);
     } catch (error) {
@@ -152,7 +155,7 @@ const AdminWallets = () => {
               <Clock className="w-6 h-6 text-white" />
             </div>
           </div>
-          <h3 className="text-2xl font-bold text-white mb-1">{pendingRequests.length.toString()}</h3>
+          <h3 className="text-2xl font-bold text-white mb-1">{pendingRequests.length}</h3>
           <p className="text-gray-400 text-sm">Pending Requests</p>
         </div>
 
@@ -162,7 +165,7 @@ const AdminWallets = () => {
               <DollarSign className="w-6 h-6 text-white" />
             </div>
           </div>
-          <h3 className="text-2xl font-bold text-white mb-1">${totalPendingAmount.toString()}</h3>
+          <h3 className="text-2xl font-bold text-white mb-1">${totalPendingAmount.toFixed(2)}</h3>
           <p className="text-gray-400 text-sm">Pending Amount</p>
         </div>
 
@@ -172,7 +175,7 @@ const AdminWallets = () => {
               <CheckCircle className="w-6 h-6 text-white" />
             </div>
           </div>
-          <h3 className="text-2xl font-bold text-white mb-1">{approvedRequests.length.toString()}</h3>
+          <h3 className="text-2xl font-bold text-white mb-1">{approvedRequests.length}</h3>
           <p className="text-gray-400 text-sm">Approved This Month</p>
         </div>
       </div>
