@@ -1,11 +1,10 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -579,94 +578,7 @@ export const Component = () => {
 
   return (
     <div ref={containerRef} className="hero-container cosmos-style">
-      <canvas ref={canvasRef} className="hero-canvas" />
-      
-      {/* Side menu */}
-      <div ref={menuRef} className="side-menu" style={{ visibility: 'hidden' }}>
-        <div className="menu-icon">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div className="vertical-text">SPACE</div>
-      </div>
-
-      {/* Main content */}
-      <div className="hero-content cosmos-content">
-        <h1 ref={titleRef} className="hero-title">
-          {splitTitle("HORIZON")}
-        </h1>
-        
-        <div ref={subtitleRef} className="hero-subtitle cosmos-subtitle">
-          <p className="subtitle-line">
-            Where vision meets reality, 
-          </p>
-          <p className="subtitle-line">
-            we shape the future of tomorrow
-          </p>
-        </div>
-      </div>
-
-      {/* Scroll progress indicator */}
-      <div ref={scrollProgressRef} className="scroll-progress" style={{ visibility: 'hidden' }}>
-        <div className="scroll-text">SCROLL</div>
-        <div className="progress-track">
-          <div 
-            className="progress-fill" 
-            style={{ width: `${scrollProgress * 100}%` }}
-          />
-        </div>
-        <div className="section-counter">
-          {String(currentSection).padStart(2, '0')} / {String(totalSections).padStart(2, '0')}
-        </div>
-      </div>
-
-      {/* Additional sections for scrolling */}
-      <div className="scroll-sections">
-       {[...Array(2)].map((_, i) => {
-          const titles = {
-            0: 'HORIZON',
-            1: 'COSMOS',
-            2: 'INFINITY'
-          } as const;
-          
-          const subtitles = {
-            0: {
-              line1: 'Where vision meets reality,',
-              line2: 'we shape the future of tomorrow'
-            },
-            1: {
-              line1: 'Beyond the boundaries of imagination,',
-              line2: 'lies the universe of possibilities'
-            },
-            2: {
-              line1: 'In the space between thought and creation,',
-              line2: 'we find the essence of true innovation'
-            }
-          } as const;
-          
-          const sectionIndex = (i + 1) as keyof typeof titles;
-          
-          return (
-            <section key={i} className="content-section">
-              <h1 className="hero-title">
-                {splitTitle(titles[sectionIndex] || 'DEFAULT')}
-              </h1>
-          
-              <div className="hero-subtitle cosmos-subtitle">
-                <p className="subtitle-line">
-                  {subtitles[sectionIndex]?.line1}
-                </p>
-                <p className="subtitle-line">
-                  {subtitles[sectionIndex]?.line2}
-                </p>
-              </div>
-            </section>
-          );
-        })}
-      </div>
-
-      <style jsx>{`
+      <style>{`
         .hero-container {
           position: relative;
           height: 300vh;
@@ -829,6 +741,93 @@ export const Component = () => {
           }
         }
       `}</style>
+      
+      <canvas ref={canvasRef} className="hero-canvas" />
+      
+      {/* Side menu */}
+      <div ref={menuRef} className="side-menu" style={{ visibility: 'hidden' }}>
+        <div className="menu-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div className="vertical-text">SPACE</div>
+      </div>
+
+      {/* Main content */}
+      <div className="hero-content cosmos-content">
+        <h1 ref={titleRef} className="hero-title">
+          {splitTitle("HORIZON")}
+        </h1>
+        
+        <div ref={subtitleRef} className="hero-subtitle cosmos-subtitle">
+          <p className="subtitle-line">
+            Where vision meets reality, 
+          </p>
+          <p className="subtitle-line">
+            we shape the future of tomorrow
+          </p>
+        </div>
+      </div>
+
+      {/* Scroll progress indicator */}
+      <div ref={scrollProgressRef} className="scroll-progress" style={{ visibility: 'hidden' }}>
+        <div className="scroll-text">SCROLL</div>
+        <div className="progress-track">
+          <div 
+            className="progress-fill" 
+            style={{ width: `${scrollProgress * 100}%` }}
+          />
+        </div>
+        <div className="section-counter">
+          {String(currentSection).padStart(2, '0')} / {String(totalSections).padStart(2, '0')}
+        </div>
+      </div>
+
+      {/* Additional sections for scrolling */}
+      <div className="scroll-sections">
+       {[...Array(2)].map((_, i) => {
+          const titles = {
+            0: 'HORIZON',
+            1: 'COSMOS',
+            2: 'INFINITY'
+          } as const;
+          
+          const subtitles = {
+            0: {
+              line1: 'Where vision meets reality,',
+              line2: 'we shape the future of tomorrow'
+            },
+            1: {
+              line1: 'Beyond the boundaries of imagination,',
+              line2: 'lies the universe of possibilities'
+            },
+            2: {
+              line1: 'In the space between thought and creation,',
+              line2: 'we find the essence of true innovation'
+            }
+          } as const;
+          
+          const sectionIndex = (i + 1) as keyof typeof titles;
+          
+          return (
+            <section key={i} className="content-section">
+              <h1 className="hero-title">
+                {splitTitle(titles[sectionIndex] || 'DEFAULT')}
+              </h1>
+          
+              <div className="hero-subtitle cosmos-subtitle">
+                <p className="subtitle-line">
+                  {subtitles[sectionIndex]?.line1}
+                </p>
+                <p className="subtitle-line">
+                  {subtitles[sectionIndex]?.line2}
+                </p>
+              </div>
+            </section>
+          );
+        })}
+      </div>
     </div>
   );
 };
