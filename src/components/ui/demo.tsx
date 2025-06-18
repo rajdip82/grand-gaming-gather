@@ -1,5 +1,6 @@
 
 import { AppleHelloEnglishEffect } from "@/components/ui/apple-hello-effect";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const AppleHelloEffectDemo = () => {
   return (
@@ -17,8 +18,18 @@ const AppleHelloEffectDemo = () => {
   );
 };
 
+const DefaultToggle = () => {
+  return (
+    <div className="space-y-2 text-center">
+      <div className="flex justify-center">
+        <ThemeToggle />
+      </div>
+    </div>
+  );
+};
+
 const DemoOne = () => {
   return <AppleHelloEffectDemo />;
 };
 
-export { DemoOne, AppleHelloEffectDemo };
+export { DemoOne, AppleHelloEffectDemo, DefaultToggle };
