@@ -1,6 +1,7 @@
 
 import { AppleHelloEnglishEffect } from "@/components/ui/apple-hello-effect";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { Component as VapourTextEffect } from "@/components/ui/vapour-text-effect";
 
 const AppleHelloEffectDemo = () => {
   return (
@@ -14,6 +15,14 @@ const AppleHelloEffectDemo = () => {
           onAnimationComplete={() => console.log("Hello animation completed!")}
         />
       </div>
+    </div>
+  );
+};
+
+const VapourTextEffectDemo = () => {
+  return (
+    <div className="flex w-full h-screen justify-center items-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <VapourTextEffect />
     </div>
   );
 };
@@ -32,4 +41,8 @@ const DemoOne = () => {
   return <AppleHelloEffectDemo />;
 };
 
-export { DemoOne, AppleHelloEffectDemo, DefaultToggle };
+const DemoTwo = () => {
+  return <VapourTextEffectDemo />;
+};
+
+export { DemoOne, DemoTwo, AppleHelloEffectDemo, VapourTextEffectDemo, DefaultToggle };
