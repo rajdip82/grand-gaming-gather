@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { Menu, X, Trophy, Users, Calendar, BarChart3, Settings, Wallet } from "lucide-react";
-import { ThemeToggle } from "./ui/theme-toggle";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,9 +53,6 @@ const Header = () => {
 
           {/* Auth Section */}
           <div className="flex items-center space-x-4">
-            {/* Theme Toggle */}
-            <ThemeToggle className="mr-2" />
-            
             <SignedOut>
               <SignInButton mode="modal">
                 <button className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105">

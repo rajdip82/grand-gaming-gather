@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import { useUser } from "@clerk/clerk-react";
-import { Users, Calendar, Trophy, Settings, BarChart3, Shield, Wallet } from "lucide-react";
+import { Users, Calendar, Trophy, Settings, BarChart3, Wallet } from "lucide-react";
 import AdminTournaments from "../components/admin/AdminTournaments";
 import AdminUsers from "../components/admin/AdminUsers";
 import AdminStats from "../components/admin/AdminStats";
@@ -13,10 +13,6 @@ const Admin = () => {
   const { user } = useUser();
   const [activeTab, setActiveTab] = useState("dashboard");
 
-  // Simple admin check - in a real app, you'd check against your database
-  const isAdmin = user?.emailAddresses[0]?.emailAddress?.includes("admin") || 
-                  user?.publicMetadata?.role === "admin";
-
   if (!user) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -25,21 +21,6 @@ const Admin = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-3xl font-bold text-white mb-4">Access Denied</h1>
             <p className="text-gray-300">Please sign in to access the admin panel.</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAdmin) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <Header />
-        <div className="pt-24 px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <Shield className="w-16 h-16 text-red-400 mx-auto mb-4" />
-            <h1 className="text-3xl font-bold text-white mb-4">Admin Access Required</h1>
-            <p className="text-gray-300">You don't have permission to access this area.</p>
           </div>
         </div>
       </div>
