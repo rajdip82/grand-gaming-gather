@@ -1,6 +1,6 @@
-
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useUser } from "@clerk/clerk-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -23,6 +23,7 @@ interface FormErrors {
 const JoinTournament = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user, isLoaded } = useUser();
   
   const [formData, setFormData] = useState<FormData>({
     username: "",
@@ -48,6 +49,53 @@ const JoinTournament = () => {
     maxParticipants: 100,
     status: "upcoming"
   };
+
+  // Show loading while checking authentication
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+        <Header />
+        <div className="pt-24 px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-400 mx-auto"></div>
+            <p className="text-white mt-4">Loading...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Redirect to sign in if not authenticated
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+        <Header />
+        <div className="pt-24 px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl p-12 backdrop-blur-sm border border-purple-500/20">
+              <div className="text-6xl mb-6">🔐</div>
+              <h1 className="text-3xl font-bold text-white mb-4">Authentication Required</h1>
+              <p className="text-gray-300 mb-8 text-lg">
+                You need to sign in to join tournaments and access exclusive features.
+              </p>
+              <div className="space-y-4">
+                <button
+                  onClick={() => window.location.href = '/'}
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105"
+                >
+                  Sign In to Continue
+                </button>
+                <p className="text-gray-400 text-sm">
+                  Don't have an account? Sign up is quick and free!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
