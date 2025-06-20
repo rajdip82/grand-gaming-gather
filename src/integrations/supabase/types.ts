@@ -11,6 +11,7 @@ export type Database = {
     Tables: {
       profiles: {
         Row: {
+          country: string | null
           created_at: string
           email: string
           full_name: string | null
@@ -20,6 +21,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          country?: string | null
           created_at?: string
           email: string
           full_name?: string | null
@@ -29,6 +31,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          country?: string | null
           created_at?: string
           email?: string
           full_name?: string | null
@@ -165,7 +168,16 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      earnings_by_country: {
+        Row: {
+          country: string | null
+          current_balance: number | null
+          total_earnings: number | null
+          total_users: number | null
+          total_withdrawals: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never

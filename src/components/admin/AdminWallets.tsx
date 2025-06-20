@@ -1,6 +1,7 @@
 
 import WalletStatsCards from "./components/WalletStatsCards";
 import WithdrawalRequestsTable from "./components/WithdrawalRequestsTable";
+import CountryEarningsTable from "./components/CountryEarningsTable";
 import { useWithdrawalRequests } from "./hooks/useWithdrawalRequests";
 
 const AdminWallets = () => {
@@ -23,6 +24,9 @@ const AdminWallets = () => {
 
       {/* Stats Cards */}
       <WalletStatsCards withdrawalRequests={withdrawalRequests} />
+
+      {/* Country-wise Earnings */}
+      <CountryEarningsTable />
 
       {/* Withdrawal Requests Table */}
       <WithdrawalRequestsTable 
