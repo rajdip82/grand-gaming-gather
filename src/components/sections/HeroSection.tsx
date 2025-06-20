@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Trophy, Zap, Plus, Target } from 'lucide-react';
+import { Trophy, Zap, Target } from 'lucide-react';
 
 const HeroSection: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -61,7 +61,7 @@ const HeroSection: React.FC = () => {
           claim <span className="text-cyan-400 font-semibold">legendary rewards</span>!
         </p>
         
-        <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center transform transition-all duration-1000 delay-700 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        <div className={`flex justify-center transform transition-all duration-1000 delay-700 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <Link 
             to="/tournaments"
             className="group relative bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 text-white px-10 py-5 rounded-xl font-bold text-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25"
@@ -72,18 +72,6 @@ const HeroSection: React.FC = () => {
               <Trophy className="w-6 h-6" />
               JOIN TOURNAMENTS
               <Zap className="w-5 h-5 animate-pulse" />
-            </span>
-          </Link>
-          
-          <Link 
-            to="/create"
-            className="group relative bg-transparent border-2 border-purple-500 text-purple-400 px-10 py-5 rounded-xl font-bold text-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:bg-purple-500 hover:text-white hover:shadow-xl hover:shadow-purple-500/30"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-purple-600/50 to-purple-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></div>
-            <span className="relative flex items-center gap-3">
-              <Plus className="w-6 h-6" />
-              CREATE TOURNAMENT
-              <Target className="w-5 h-5" />
             </span>
           </Link>
         </div>
