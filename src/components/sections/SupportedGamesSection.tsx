@@ -7,12 +7,12 @@ const SupportedGamesSection: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const supportedGames = [
-    { name: "PUBG Mobile", icon: "🎯", players: "1.2M+" },
-    { name: "Free Fire", icon: "🔥", players: "800K+" },
-    { name: "Clash of Clans", icon: "⚔️", players: "500K+" },
-    { name: "Ludo King", icon: "🎲", players: "300K+" },
-    { name: "Call of Duty", icon: "🎮", players: "400K+" },
-    { name: "Among Us", icon: "🚀", players: "200K+" }
+    { name: "BGMI", image: "/lovable-uploads/e4259971-f5c0-4989-9140-894be0527243.png", players: "1.2M+" },
+    { name: "Free Fire Max", image: "/lovable-uploads/e4259971-f5c0-4989-9140-894be0527243.png", players: "800K+" },
+    { name: "Call of Duty Mobile", image: "/lovable-uploads/e4259971-f5c0-4989-9140-894be0527243.png", players: "400K+" },
+    { name: "Asphalt 9", image: "/lovable-uploads/e4259971-f5c0-4989-9140-894be0527243.png", players: "350K+" },
+    { name: "Bombsquad", image: "/lovable-uploads/e4259971-f5c0-4989-9140-894be0527243.png", players: "250K+" },
+    { name: "Brawl Stars", image: "/lovable-uploads/e4259971-f5c0-4989-9140-894be0527243.png", players: "600K+" }
   ];
 
   useEffect(() => {

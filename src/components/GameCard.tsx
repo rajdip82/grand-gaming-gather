@@ -1,7 +1,8 @@
 
 interface Game {
   name: string;
-  icon: string;
+  icon?: string;
+  image?: string;
   players: string;
 }
 
@@ -11,7 +12,7 @@ interface GameCardProps {
 
 const GameCard = ({ game }: GameCardProps) => {
   return (
-    <div className="group relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl p-6 text-center backdrop-blur-sm border border-purple-500/20 hover:border-purple-400/60 transition-all duration-500 transform hover:scale-105 cursor-pointer overflow-hidden">
+    <div className="group relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl p-4 text-center backdrop-blur-sm border border-purple-500/20 hover:border-purple-400/60 transition-all duration-500 transform hover:scale-105 cursor-pointer overflow-hidden">
       {/* Animated background effect */}
       <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-pink-600/10 to-purple-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
       
@@ -21,13 +22,27 @@ const GameCard = ({ game }: GameCardProps) => {
       </div>
       
       <div className="relative z-10">
-        <div className="text-4xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
-          {game.icon}
+        {/* Game Image or Icon */}
+        <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300">
+          {game.image ? (
+            <div className="w-16 h-16 mx-auto rounded-lg overflow-hidden bg-slate-700/50">
+              <img 
+                src={game.image} 
+                alt={game.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ) : (
+            <div className="text-4xl">
+              {game.icon}
+            </div>
+          )}
         </div>
-        <h3 className="text-white font-bold mb-2 group-hover:text-purple-300 transition-colors duration-300">
+        
+        <h3 className="text-white font-bold mb-2 group-hover:text-purple-300 transition-colors duration-300 text-sm">
           {game.name}
         </h3>
-        <p className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300">
+        <p className="text-gray-400 text-xs group-hover:text-gray-300 transition-colors duration-300">
           <span className="font-semibold text-purple-400">{game.players}</span> players
         </p>
         
