@@ -53,6 +53,9 @@ const BettingModal = ({ match, selectedBet, onClose }: BettingModalProps) => {
         throw new Error('Insufficient balance');
       }
 
+      // Calculate potential payout for TypeScript compliance
+      const potentialPayout = amount * odds;
+
       // Create the bet
       const { data: betData, error: betError } = await supabase
         .from('bets')
@@ -62,7 +65,8 @@ const BettingModal = ({ match, selectedBet, onClose }: BettingModalProps) => {
           wallet_id: wallet.id,
           bet_on: betOn,
           amount: amount,
-          odds: odds
+          odds: odds,
+          potential_payout: potentialPayout
         })
         .select()
         .single();

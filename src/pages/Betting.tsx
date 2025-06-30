@@ -40,7 +40,12 @@ const Betting = () => {
         .order('match_time', { ascending: true });
       
       if (error) throw error;
-      return data as Match[];
+      
+      // Transform the data to match our interface
+      return data.map(match => ({
+        ...match,
+        betting_odds: match.betting_odds?.[0] || undefined
+      })) as Match[];
     },
   });
 
