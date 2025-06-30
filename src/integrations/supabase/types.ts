@@ -9,6 +9,149 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      bets: {
+        Row: {
+          amount: number
+          bet_on: string
+          created_at: string
+          id: string
+          match_id: string
+          odds: number
+          payout_amount: number | null
+          potential_payout: number
+          status: string
+          updated_at: string
+          user_id: string
+          wallet_id: string
+        }
+        Insert: {
+          amount: number
+          bet_on: string
+          created_at?: string
+          id?: string
+          match_id: string
+          odds: number
+          payout_amount?: number | null
+          potential_payout: number
+          status?: string
+          updated_at?: string
+          user_id: string
+          wallet_id: string
+        }
+        Update: {
+          amount?: number
+          bet_on?: string
+          created_at?: string
+          id?: string
+          match_id?: string
+          odds?: number
+          payout_amount?: number | null
+          potential_payout?: number
+          status?: string
+          updated_at?: string
+          user_id?: string
+          wallet_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bets_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bets_wallet_id_fkey"
+            columns: ["wallet_id"]
+            isOneToOne: false
+            referencedRelation: "wallets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      betting_odds: {
+        Row: {
+          created_at: string
+          draw_odds: number | null
+          id: string
+          is_active: boolean
+          match_id: string
+          team_a_odds: number
+          team_b_odds: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          draw_odds?: number | null
+          id?: string
+          is_active?: boolean
+          match_id: string
+          team_a_odds?: number
+          team_b_odds?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          draw_odds?: number | null
+          id?: string
+          is_active?: boolean
+          match_id?: string
+          team_a_odds?: number
+          team_b_odds?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "betting_odds_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      matches: {
+        Row: {
+          created_at: string
+          id: string
+          match_time: string
+          status: string
+          team_a: string
+          team_a_logo: string | null
+          team_b: string
+          team_b_logo: string | null
+          tournament_id: string | null
+          updated_at: string
+          winner: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          match_time: string
+          status?: string
+          team_a: string
+          team_a_logo?: string | null
+          team_b: string
+          team_b_logo?: string | null
+          tournament_id?: string | null
+          updated_at?: string
+          winner?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          match_time?: string
+          status?: string
+          team_a?: string
+          team_a_logo?: string | null
+          team_b?: string
+          team_b_logo?: string | null
+          tournament_id?: string | null
+          updated_at?: string
+          winner?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           country: string | null
