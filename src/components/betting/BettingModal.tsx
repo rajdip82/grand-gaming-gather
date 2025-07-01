@@ -4,11 +4,11 @@ import { useUser } from "@clerk/clerk-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Badge } from "../ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import BetSelectionDisplay from "./BetSelectionDisplay";
+import BetAmountInput from "./BetAmountInput";
+import BetSummary from "./BetSummary";
 
 interface Match {
   id: string;
@@ -158,34 +158,6 @@ const BettingModal = ({ match, selectedBet, onClose }: BettingModalProps) => {
     });
   };
 
-  const potentialWin = parseFloat(betAmount) * selectedBet.odds || 0;
-
-  const getTeamName = (team: string) => {
-    switch (team) {
-      case 'team_a': return match.team_a;
-      case 'team_b': return match.team_b;
-      case 'draw': return 'Draw';
-      default: return team;
-    }
-  };
-
-  const getBetDisplayName = () => {
-    const betType = selectedBet.betType;
-    const team = getTeamName(selectedBet.team);
-    
-    if (!betType || betType === 'match_winner') {
-      return team;
-    }
-    
-    switch (betType) {
-      case 'first_kill': return `${team} First Kill`;
-      case 'first_tower': return `${team} First Tower`;
-      case 'most_kills': return `Most Kills ${team}`;
-      case 'mvp_player': return `MVP ${team}`;
-      default: return team;
-    }
-  };
-
   return (
     <Dialog open={true} onOpenChange={onClose}>
       <DialogContent className="bg-slate-800 border-purple-500/20 text-white">
@@ -196,60 +168,15 @@ const BettingModal = ({ match, selectedBet, onClose }: BettingModalProps) => {
         </DialogHeader>
 
         <div className="space-y-4">
-          <div className="bg-slate-700/50 p-4 rounded-lg">
-            <h3 className="font-semibold mb-2">Match Details</h3>
-            <p className="text-gray-300">{match.team_a} vs {match.team_b}</p>
-            <p className="text-sm text-gray-400">{new Date(match.match_time).toLocaleString()}</p>
-          </div>
+          <BetSelectionDisplay match={match} selectedBet={selectedBet} />
+          
+          <BetAmountInput 
+            betAmount={betAmount}
+            setBetAmount={setBetAmount}
+            wallet={wallet}
+          />
 
-          <div className="bg-slate-700/50 p-4 rounded-lg">
-            <h3 className="font-semibold mb-2">Bet Selection</h3>
-            <div className="flex justify-between items-center flex-wrap gap-2">
-              <div className="flex items-center space-x-2">
-                <span>Betting on:</span>
-                <Badge variant="outline" className="text-purple-400 border-purple-400">
-                  {getBetDisplayName()}
-                </Badge>
-              </div>
-              <span>Odds: <span className="text-green-400 font-bold">{selectedBet.odds}x</span></span>
-            </div>
-            {selectedBet.betType && selectedBet.betType !== 'match_winner' && (
-              <div className="mt-2">
-                <Badge className="bg-red-500/20 text-red-400 border-red-400">
-                  Live Betting
-                </Badge>
-              </div>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="betAmount">Bet Amount ($)</Label>
-            <Input
-              id="betAmount"
-              type="number"
-              placeholder="Enter amount"
-              value={betAmount}
-              onChange={(e) => setBetAmount(e.target.value)}
-              className="bg-slate-700 border-slate-600 text-white"
-              min="1"
-              step="0.01"
-            />
-          </div>
-
-          {wallet && (
-            <div className="text-sm text-gray-400">
-              Available Balance: <span className="text-green-400">${wallet.balance}</span>
-            </div>
-          )}
-
-          {betAmount && (
-            <div className="bg-purple-600/20 p-3 rounded-lg">
-              <div className="flex justify-between">
-                <span>Potential Win:</span>
-                <span className="text-green-400 font-bold">${potentialWin.toFixed(2)}</span>
-              </div>
-            </div>
-          )}
+          <BetSummary betAmount={betAmount} odds={selectedBet.odds} />
 
           <div className="flex space-x-3 pt-4">
             <Button
