@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { Badge } from "../ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -18,7 +19,7 @@ interface Match {
 
 interface BettingModalProps {
   match: Match;
-  selectedBet: { team: string; odds: number };
+  selectedBet: { team: string; odds: number; betType?: string };
   onClose: () => void;
 }
 
@@ -45,7 +46,7 @@ const BettingModal = ({ match, selectedBet, onClose }: BettingModalProps) => {
   });
 
   const placeBetMutation = useMutation({
-    mutationFn: async ({ amount, betOn, odds }: { amount: number; betOn: string; odds: number }) => {
+    mutationFn: async ({ amount, betOn, odds, betType }: { amount: number; betOn: string; odds: number; betType?: string }) => {
       if (!wallet) throw new Error('Wallet not found');
       
       // Check if user has sufficient balance
@@ -56,7 +57,9 @@ const BettingModal = ({ match, selectedBet, onClose }: BettingModalProps) => {
       // Calculate potential payout for TypeScript compliance
       const potentialPayout = amount * odds;
 
-      // Create the bet
+      // Create the bet with bet type information
+      const betDescription = getBetDescription(betType, betOn);
+      
       const { data: betData, error: betError } = await supabase
         .from('bets')
         .insert({
@@ -83,7 +86,7 @@ const BettingModal = ({ match, selectedBet, onClose }: BettingModalProps) => {
           amount: amount,
           category: 'betting',
           status: 'completed',
-          description: `Bet placed on ${match.team_a} vs ${match.team_b}`
+          description: `${betDescription} - ${match.team_a} vs ${match.team_b}`
         });
 
       if (transactionError) throw transactionError;
@@ -91,12 +94,14 @@ const BettingModal = ({ match, selectedBet, onClose }: BettingModalProps) => {
       return betData;
     },
     onSuccess: () => {
+      const betTypeLabel = getBetTypeLabel(selectedBet.betType);
       toast({
         title: "Bet Placed Successfully!",
-        description: `Your bet of $${betAmount} has been placed.`,
+        description: `Your ${betTypeLabel} bet of $${betAmount} has been placed.`,
       });
       queryClient.invalidateQueries({ queryKey: ['wallet'] });
       queryClient.invalidateQueries({ queryKey: ['user-bets'] });
+      queryClient.invalidateQueries({ queryKey: ['live-matches'] });
       onClose();
     },
     onError: (error: Error) => {
@@ -107,6 +112,32 @@ const BettingModal = ({ match, selectedBet, onClose }: BettingModalProps) => {
       });
     },
   });
+
+  const getBetDescription = (betType?: string, betOn?: string) => {
+    if (!betType) return 'Bet placed';
+    
+    switch (betType) {
+      case 'match_winner': return 'Match winner bet';
+      case 'first_kill': return 'First kill bet';
+      case 'first_tower': return 'First tower bet';
+      case 'most_kills': return 'Most kills bet';
+      case 'mvp_player': return 'MVP player bet';
+      default: return 'Bet placed';
+    }
+  };
+
+  const getBetTypeLabel = (betType?: string) => {
+    if (!betType) return 'match';
+    
+    switch (betType) {
+      case 'match_winner': return 'match winner';
+      case 'first_kill': return 'first kill';
+      case 'first_tower': return 'first tower';
+      case 'most_kills': return 'most kills';
+      case 'mvp_player': return 'MVP player';
+      default: return 'match';
+    }
+  };
 
   const handlePlaceBet = () => {
     const amount = parseFloat(betAmount);
@@ -122,7 +153,8 @@ const BettingModal = ({ match, selectedBet, onClose }: BettingModalProps) => {
     placeBetMutation.mutate({
       amount,
       betOn: selectedBet.team,
-      odds: selectedBet.odds
+      odds: selectedBet.odds,
+      betType: selectedBet.betType
     });
   };
 
@@ -133,6 +165,23 @@ const BettingModal = ({ match, selectedBet, onClose }: BettingModalProps) => {
       case 'team_a': return match.team_a;
       case 'team_b': return match.team_b;
       case 'draw': return 'Draw';
+      default: return team;
+    }
+  };
+
+  const getBetDisplayName = () => {
+    const betType = selectedBet.betType;
+    const team = getTeamName(selectedBet.team);
+    
+    if (!betType || betType === 'match_winner') {
+      return team;
+    }
+    
+    switch (betType) {
+      case 'first_kill': return `${team} First Kill`;
+      case 'first_tower': return `${team} First Tower`;
+      case 'most_kills': return `Most Kills ${team}`;
+      case 'mvp_player': return `MVP ${team}`;
       default: return team;
     }
   };
@@ -155,10 +204,22 @@ const BettingModal = ({ match, selectedBet, onClose }: BettingModalProps) => {
 
           <div className="bg-slate-700/50 p-4 rounded-lg">
             <h3 className="font-semibold mb-2">Bet Selection</h3>
-            <div className="flex justify-between items-center">
-              <span>Betting on: <span className="text-purple-400 font-bold">{getTeamName(selectedBet.team)}</span></span>
+            <div className="flex justify-between items-center flex-wrap gap-2">
+              <div className="flex items-center space-x-2">
+                <span>Betting on:</span>
+                <Badge variant="outline" className="text-purple-400 border-purple-400">
+                  {getBetDisplayName()}
+                </Badge>
+              </div>
               <span>Odds: <span className="text-green-400 font-bold">{selectedBet.odds}x</span></span>
             </div>
+            {selectedBet.betType && selectedBet.betType !== 'match_winner' && (
+              <div className="mt-2">
+                <Badge className="bg-red-500/20 text-red-400 border-red-400">
+                  Live Betting
+                </Badge>
+              </div>
+            )}
           </div>
 
           <div className="space-y-2">
